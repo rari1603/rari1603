@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o samvaad-k8s/
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: bbb-web
+  name: bbb-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: bbb-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o samvaad-k8s/
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/bbb-net: "true"
+        io.kompose.service: bbb-web
+    spec:
+      containers:
+        - env:
+            - name: DEV_MODE
+            - name: DOMAIN
+            - name: ENABLE_LEARNING_DASHBOARD
+              value: "true"
+            - name: ENABLE_RECORDING
+              value: "false"
+            - name: NUMBER_OF_BACKEND_NODEJS_PROCESSES
+              value: "2"
+            - name: SHARED_SECRET
+            - name: STUN_SERVER
+              value: 'stun::'
+            - name: TURN_SECRET
+            - name: TURN_SERVER
+            - name: WELCOME_FOOTER
+            - name: WELCOME_MESSAGE
+          image: bbb-web
+          livenessProbe:
+            exec:
+              command:
+                - wget --no-proxy --no-verbose --tries=1 --spider http://10.7.7.2:8090/bigbluebutton/api || exit 1
+            initialDelaySeconds: 120
+          name: bbb-web
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/bigbluebutton
+              name: bigbluebutton
+            - mountPath: /var/freeswitch/meetings
+              name: vol-freeswitch
+            - mountPath: /var/kurento
+              name: vol-kurento
+      restartPolicy: Always
+      volumes:
+        - name: bigbluebutton
+          persistentVolumeClaim:
+            claimName: bigbluebutton
+        - name: vol-freeswitch
+          persistentVolumeClaim:
+            claimName: vol-freeswitch
+        - name: vol-kurento
+          persistentVolumeClaim:
+            claimName: vol-kurento
+status: {}

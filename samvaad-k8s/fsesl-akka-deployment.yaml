@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o samvaad-k8s/
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fsesl-akka
+  name: fsesl-akka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: fsesl-akka
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o samvaad-k8s/
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/bbb-net: "true"
+        io.kompose.service: fsesl-akka
+    spec:
+      containers:
+        - env:
+            - name: FSESL_PASSWORD
+              value: ClueCon
+          image: fsesl-akka
+          name: fsesl-akka
+          resources: {}
+      restartPolicy: Always
+status: {}

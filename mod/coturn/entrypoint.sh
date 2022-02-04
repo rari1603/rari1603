@@ -12,8 +12,8 @@ if [ "$ENABLE_HTTPS_PROXY" == true ]; then
   done
 
   # extract cert
-  cat /etc/resty-auto-ssl/storage/file/*%3Alatest | jq -r '.fullchain_pem' > /tmp/cert.pem
-  cat /etc/resty-auto-ssl/storage/file/*%3Alatest | jq -r '.privkey_pem' > /tmp/key.pem
+  #cat /etc/resty-auto-ssl/storage/file/*%3Alatest | jq -r '.fullchain_pem' > /tmp/cert.pem
+  #cat /etc/resty-auto-ssl/storage/file/*%3Alatest | jq -r '.privkey_pem' > /tmp/key.pem
 fi
 
 if [ ! -f /tmp/cert.pem ] || [ ! -f /tmp/key.pem ]; then
@@ -29,3 +29,6 @@ if [ "${1:0:1}" == '-' ]; then
 fi
 
 exec $(eval "echo $@")
+
+
+

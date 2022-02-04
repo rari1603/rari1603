@@ -23,7 +23,7 @@ ENV NODE_ENV production
 # we simply delete the .git file
 RUN cp config/default.example.yml config/production.yml \
  && chown -R webrtc-sfu:webrtc-sfu config \
- && rm .git \
+# && rm .git \
  && npm install --unsafe-perm \
  && npm cache clear --force \
  && rm -rf node_modules/mediasoup/worker/out/Release/subprojects \

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o samvaad-k8s/
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: coturn
+  name: coturn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coturn
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o samvaad-k8s/
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: coturn
+    spec:
+      containers:
+        - args:
+            - --external-ip=/
+            - --external-ip=::1/::1
+            - --static-auth-secret=
+          image: instrumentisto/coturn:4.5
+          name: coturn
+          resources: {}
+          volumeMounts:
+            - mountPath: /tmp/cert.pem
+              name: coturn-claim0
+            - mountPath: /tmp/key.pem
+              name: coturn-claim1
+            - mountPath: /usr/local/bin/docker-entrypoint.sh
+              name: coturn-claim2
+            - mountPath: /etc/coturn/turnserver.conf
+              name: coturn-claim3
+      restartPolicy: Always
+      volumes:
+        - name: coturn-claim0
+          persistentVolumeClaim:
+            claimName: coturn-claim0
+        - name: coturn-claim1
+          persistentVolumeClaim:
+            claimName: coturn-claim1
+        - name: coturn-claim2
+          persistentVolumeClaim:
+            claimName: coturn-claim2
+        - name: coturn-claim3
+          persistentVolumeClaim:
+            claimName: coturn-claim3
+status: {}

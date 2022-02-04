@@ -1,0 +1,396 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o samvaad-k8s/
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: greenlight
+  name: greenlight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: greenlight
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o samvaad-k8s/
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: greenlight
+    spec:
+      containers:
+        - env:
+            - name: ALLOW_GREENLIGHT_ACCOUNTS
+              valueFrom:
+                configMapKeyRef:
+                  key: ALLOW_GREENLIGHT_ACCOUNTS
+                  name: env
+            - name: AUTO_SHARE_WEBCAM
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTO_SHARE_WEBCAM
+                  name: env
+            - name: BIGBLUEBUTTON_ENDPOINT
+              value: https:///bigbluebutton/api/
+            - name: BIGBLUEBUTTON_SECRET
+            - name: BREAKOUTROOM_LIMIT
+              valueFrom:
+                configMapKeyRef:
+                  key: BREAKOUTROOM_LIMIT
+                  name: env
+            - name: CHAT_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: CHAT_ENABLED
+                  name: env
+            - name: CHAT_START_CLOSED
+              valueFrom:
+                configMapKeyRef:
+                  key: CHAT_START_CLOSED
+                  name: env
+            - name: CLIENT_TITLE
+              valueFrom:
+                configMapKeyRef:
+                  key: CLIENT_TITLE
+                  name: env
+            - name: DB_ADAPTER
+              value: postgresql
+            - name: DB_HOST
+              value: postgres
+            - name: DB_NAME
+              value: greenlight
+            - name: DB_PASSWORD
+              value: password
+            - name: DB_USERNAME
+              value: postgres
+            - name: DEFAULT_PRESENTATION
+              valueFrom:
+                configMapKeyRef:
+                  key: DEFAULT_PRESENTATION
+                  name: env
+            - name: DEFAULT_REGISTRATION
+              valueFrom:
+                configMapKeyRef:
+                  key: DEFAULT_REGISTRATION
+                  name: env
+            - name: DISABLE_ECHO_TEST
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_ECHO_TEST
+                  name: env
+            - name: DISABLE_SOUND_ALONE
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_SOUND_ALONE
+                  name: env
+            - name: DISABLE_SOUND_MUTED
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_SOUND_MUTED
+                  name: env
+            - name: DISABLE_VIDEO_PREVIEW
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_VIDEO_PREVIEW
+                  name: env
+            - name: DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: DOMAIN
+                  name: env
+            - name: ENABLE_COTURN
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_COTURN
+                  name: env
+            - name: ENABLE_GOOGLE_CALENDAR_BUTTON
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_GOOGLE_CALENDAR_BUTTON
+                  name: env
+            - name: ENABLE_GREENLIGHT
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_GREENLIGHT
+                  name: env
+            - name: ENABLE_HTTPS_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_HTTPS_PROXY
+                  name: env
+            - name: ENABLE_LEARNING_DASHBOARD
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_LEARNING_DASHBOARD
+                  name: env
+            - name: ENABLE_RECORDING
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_RECORDING
+                  name: env
+            - name: ETHERPAD_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: ETHERPAD_API_KEY
+                  name: env
+            - name: EXTERNAL_IPv4
+              valueFrom:
+                configMapKeyRef:
+                  key: EXTERNAL_IPv4
+                  name: env
+            - name: EXTERNAL_IPv6
+              valueFrom:
+                configMapKeyRef:
+                  key: EXTERNAL_IPv6
+                  name: env
+            - name: FSESL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: FSESL_PASSWORD
+                  name: env
+            - name: HELP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: HELP_URL
+                  name: env
+            - name: LDAP_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_AUTH
+                  name: env
+            - name: LDAP_BASE
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_BASE
+                  name: env
+            - name: LDAP_BIND_DN
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_BIND_DN
+                  name: env
+            - name: LDAP_FILTER
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_FILTER
+                  name: env
+            - name: LDAP_METHOD
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_METHOD
+                  name: env
+            - name: LDAP_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_PASSWORD
+                  name: env
+            - name: LDAP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_PORT
+                  name: env
+            - name: LDAP_ROLE_FIELD
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_ROLE_FIELD
+                  name: env
+            - name: LDAP_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_SERVER
+                  name: env
+            - name: LDAP_UID
+              valueFrom:
+                configMapKeyRef:
+                  key: LDAP_UID
+                  name: env
+            - name: LISTEN_ONLY_MODE
+              valueFrom:
+                configMapKeyRef:
+                  key: LISTEN_ONLY_MODE
+                  name: env
+            - name: MAINTENANCE_MODE
+              valueFrom:
+                configMapKeyRef:
+                  key: MAINTENANCE_MODE
+                  name: env
+            - name: MAINTENANCE_WINDOW
+              valueFrom:
+                configMapKeyRef:
+                  key: MAINTENANCE_WINDOW
+                  name: env
+            - name: NUMBER_OF_BACKEND_NODEJS_PROCESSES
+              valueFrom:
+                configMapKeyRef:
+                  key: NUMBER_OF_BACKEND_NODEJS_PROCESSES
+                  name: env
+            - name: NUMBER_OF_FRONTEND_NODEJS_PROCESSES
+              valueFrom:
+                configMapKeyRef:
+                  key: NUMBER_OF_FRONTEND_NODEJS_PROCESSES
+                  name: env
+            - name: NUMBER_OF_ROWS
+              valueFrom:
+                configMapKeyRef:
+                  key: NUMBER_OF_ROWS
+                  name: env
+            - name: OAUTH2_REDIRECT
+              valueFrom:
+                configMapKeyRef:
+                  key: OAUTH2_REDIRECT
+                  name: env
+            - name: OFFICE365_HD
+              valueFrom:
+                configMapKeyRef:
+                  key: OFFICE365_HD
+                  name: env
+            - name: OFFICE365_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: OFFICE365_KEY
+                  name: env
+            - name: OFFICE365_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: OFFICE365_SECRET
+                  name: env
+            - name: PAGINATION_NUMBER
+              valueFrom:
+                configMapKeyRef:
+                  key: PAGINATION_NUMBER
+                  name: env
+            - name: POSTGRESQL_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRESQL_SECRET
+                  name: env
+            - name: RAILS_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: RAILS_SECRET
+                  name: env
+            - name: RECORDING_MAX_AGE_DAYS
+              valueFrom:
+                configMapKeyRef:
+                  key: RECORDING_MAX_AGE_DAYS
+                  name: env
+            - name: RELATIVE_URL_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  key: RELATIVE_URL_ROOT
+                  name: env
+            - name: REMOVE_OLD_RECORDING
+              valueFrom:
+                configMapKeyRef:
+                  key: REMOVE_OLD_RECORDING
+                  name: env
+            - name: ROOM_FEATURES
+              valueFrom:
+                configMapKeyRef:
+                  key: ROOM_FEATURES
+                  name: env
+            - name: SECRET_KEY_BASE
+            - name: SHARED_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: SHARED_SECRET
+                  name: env
+            - name: SIP_IP_ALLOWLIST
+              valueFrom:
+                configMapKeyRef:
+                  key: SIP_IP_ALLOWLIST
+                  name: env
+            - name: SMTP_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_AUTH
+                  name: env
+            - name: SMTP_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_DOMAIN
+                  name: env
+            - name: SMTP_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_PASSWORD
+                  name: env
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_PORT
+                  name: env
+            - name: SMTP_SENDER
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_SENDER
+                  name: env
+            - name: SMTP_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_SERVER
+                  name: env
+            - name: SMTP_STARTTLS_AUTO
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_STARTTLS_AUTO
+                  name: env
+            - name: SMTP_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_USERNAME
+                  name: env
+            - name: SOUNDS_LANGUAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: SOUNDS_LANGUAGE
+                  name: env
+            - name: STUN_IP
+              valueFrom:
+                configMapKeyRef:
+                  key: STUN_IP
+                  name: env
+            - name: STUN_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: STUN_PORT
+                  name: env
+            - name: TURN_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: TURN_SECRET
+                  name: env
+            - name: TURN_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: TURN_SERVER
+                  name: env
+            - name: WELCOME_FOOTER
+              valueFrom:
+                configMapKeyRef:
+                  key: WELCOME_FOOTER
+                  name: env
+            - name: WELCOME_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: WELCOME_MESSAGE
+                  name: env
+          image: bigbluebutton/greenlight:v2
+          name: greenlight
+          ports:
+            - containerPort: 80
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/src/app/log
+              name: greenlight-claim0
+      restartPolicy: Always
+      volumes:
+        - name: greenlight-claim0
+          persistentVolumeClaim:
+            claimName: greenlight-claim0
+status: {}
